@@ -1,0 +1,321 @@
+import React, { useState } from 'react';
+import { Mail, Phone, MapPin, ChevronDown, ChevronRight, Award, Briefcase, GraduationCap, Code, Target } from 'lucide-react';
+
+const InteractiveCV = () => {
+  const [activeSection, setActiveSection] = useState('summary');
+  const [expandedExperience, setExpandedExperience] = useState({});
+
+  const toggleExperience = (id) => {
+    setExpandedExperience(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
+  const experiences = [
+    {
+      id: 'buddyos',
+      title: 'Consultant',
+      company: 'BuddyOS STEM',
+      period: '2024-2025',
+      location: 'AI STEM toys - Vietnam & Remote',
+      highlights: ['Market Research & Customer Discovery', 'Strategic Business Development', 'Cross-functional Project Execution'],
+      details: [
+        'Built comprehensive user personas from scratch and conducted validation tests with early adopters to ensure product-market fit, directly informing strategic product decisions',
+        'Advised founders on transforming market insights and customer feedback into prioritized strategic initiatives, enabling clear executive decision-making',
+        'Led daily collaboration with engineering teams while managing strategic alignment across educators and business stakeholders'
+      ]
+    },
+    {
+      id: 'gumac',
+      title: 'Strategic Project Manager & CEO Assistant',
+      company: 'GUMAC',
+      period: '2022-2023',
+      location: 'Vietnam\'s Leading Fashion Brand - 40+ retail locations',
+      highlights: ['Strategic Initiative Leadership', 'Digital Transformation Strategy', 'Executive Presentations & Analysis'],
+      details: [
+        'Advised C-suite on complete product lifecycle for G-morning sub-brand from concept to profitability within 6 months through coordinated strategic planning across design, marketing, and operations',
+        'Led cross-functional digital transformation initiative for internal processes, developing structured implementation plans and training 30+ stakeholders',
+        'Presented customer insights, competitive analysis, and performance metrics to C-suite and Board of Directors, translating market data into strategic recommendations that drove company-wide initiatives'
+      ]
+    },
+    {
+      id: 'olli',
+      title: 'Growth Associate & Product Owner',
+      company: 'OLLI AI Technology',
+      period: '2021-2022',
+      location: 'Smart Speakers - Vietnam & Remote',
+      highlights: ['Data-Driven Strategy Development', 'Strategic Analysis & Testing', 'Cross-functional Strategy Execution'],
+      details: [
+        'Built internal BI system tracking user engagement, retention, and behavior patterns to guide strategic product decisions and market positioning',
+        'Drove hypothesis-based strategic improvements through structured testing methodologies, achieving 35% increase in user engagement by translating competitive insights into actionable features',
+        'Owned music recommendation feature strategy, collaborating with data engineers and scientists to optimize performance'
+      ]
+    },
+    {
+      id: 'mmtc',
+      title: 'Researcher Intern',
+      company: 'Media, Management and Transformation Center (MMTC)',
+      period: '2025',
+      location: 'Jönköping International Business School',
+      highlights: ['Strategic Market Analysis', 'Workshop Facilitation & Strategy Implementation', 'Innovation Strategy Development'],
+      details: [
+        'Systematically analyzed multi-year industry data and conducted 10+ in-depth stakeholder interviews to identify strategic improvement opportunities',
+        'Conducted four strategic workshops introducing innovation frameworks to 180+ participants through structured usability testing and action research methodologies',
+        'Designed cognitive decision-making framework improving strategic outcomes for 30 entrepreneurial teams using human-centered design principles'
+      ]
+    },
+    {
+      id: 'libe',
+      title: 'Assistant to Creative Director',
+      company: 'LIBÉ',
+      period: '2019-2020',
+      location: 'Leading Contemporary Fashion House, Vietnam',
+      highlights: ['Digital Transformation Strategy', 'Market Research & Customer Insights', 'Strategic Partnership Development'],
+      details: [
+        'Initiated and contributed to successful DTC platform launch, conducting competitive analysis and market research to inform strategic positioning',
+        'Conducted comprehensive market surveys and customer interviews, generating actionable insights for product development and strategic customer experience improvements',
+        'Collaborated with international partners including Swedish artist Sofia Holt to develop strategic brand positioning, resulting in measurable brand image enhancement'
+      ]
+    }
+  ];
+
+  const skills = {
+    'Strategic Analysis': ['Excel (Advanced)', 'PowerPoint (Executive Presentations)', 'Data Modeling'],
+    'Market Research & Analytics': ['SQL', 'Google Analytics', 'Custom BI Systems', 'Competitive Intelligence'],
+    'Project Management': ['Miro', 'Notion', 'Jira', 'Confluence', 'Agile/Scrum Methodologies'],
+    'Cross-functional Collaboration': ['Technical specification writing', 'Engineering team communication', 'Stakeholder management']
+  };
+
+  const navItems = [
+    { id: 'summary', label: 'Summary', icon: Target },
+    { id: 'education', label: 'Education', icon: GraduationCap },
+    { id: 'experience', label: 'Experience', icon: Briefcase },
+    { id: 'skills', label: 'Skills', icon: Code },
+    { id: 'achievements', label: 'Achievements', icon: Award }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      {/* Header */}
+      <div className="bg-white shadow-lg border-b-4 border-blue-600">
+        <div className="max-w-6xl mx-auto px-6 py-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold text-gray-900 mb-2">HANH LUU</h1>
+              <h2 className="text-2xl text-blue-600 font-semibold">Strategy Analyst</h2>
+            </div>
+            <div className="text-right space-y-2">
+              <div className="flex items-center justify-end space-x-2 text-gray-600">
+                <Mail className="w-4 h-4" />
+                <span>luuthuyhanh@gmail.com</span>
+              </div>
+              <div className="flex items-center justify-end space-x-2 text-gray-600">
+                <Phone className="w-4 h-4" />
+                <span>+46 76 154 6740</span>
+              </div>
+              <div className="flex items-center justify-end space-x-2 text-gray-600">
+                <MapPin className="w-4 h-4" />
+                <span>Stockholm, Sweden</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 py-8">
+        <div className="flex gap-8">
+          {/* Navigation Sidebar */}
+          <div className="w-64 bg-white rounded-lg shadow-lg p-6 h-fit sticky top-8">
+            <nav className="space-y-2">
+              {navItems.map(item => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveSection(item.id)}
+                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                      activeSection === item.id 
+                        ? 'bg-blue-100 text-blue-700 shadow-md' 
+                        : 'text-gray-600 hover:bg-gray-50'
+                    }`}
+                  >
+                    <Icon className="w-5 h-5" />
+                    <span className="font-medium">{item.label}</span>
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+
+          {/* Main Content */}
+          <div className="flex-1">
+            {/* Professional Summary */}
+            {activeSection === 'summary' && (
+              <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                  <Target className="w-6 h-6 mr-3 text-blue-600" />
+                  Professional Summary
+                </h3>
+                <p className="text-gray-700 leading-relaxed mb-6">
+                  Strategy-focused professional with 5+ years driving strategic initiatives, market research, and cross-functional project execution across startups and established enterprises. Proven expertise in data-driven analysis, competitive intelligence, and executive presentations. Strong background in digital transformation, customer discovery, and workshop facilitation.
+                </p>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="bg-blue-50 p-4 rounded-lg">
+                    <h4 className="font-semibold text-gray-900 mb-2">Core Strengths:</h4>
+                    <ul className="space-y-1 text-sm text-gray-700">
+                      <li>• Strategic analysis and market research with quantified business impact</li>
+                      <li>• Executive communication and stakeholder management across C-suite audiences</li>
+                      <li>• Cross-functional leadership spanning technical teams to business stakeholders</li>
+                      <li>• Data modeling and structured problem-solving methodologies</li>
+                    </ul>
+                  </div>
+                  <div className="bg-green-50 p-4 rounded-lg">
+                    <h4 className="font-semibold text-gray-900 mb-2">Key Metrics:</h4>
+                    <ul className="space-y-1 text-sm text-gray-700">
+                      <li>• 5+ years strategic experience</li>
+                      <li>• 35% user engagement increase achieved</li>
+                      <li>• 180+ workshop participants trained</li>
+                      <li>• 40+ retail locations transformed</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Education */}
+            {activeSection === 'education' && (
+              <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                  <GraduationCap className="w-6 h-6 mr-3 text-blue-600" />
+                  Education
+                </h3>
+                <div className="space-y-6">
+                  <div className="border-l-4 border-blue-500 pl-6">
+                    <h4 className="text-xl font-semibold text-gray-900">Master's in Strategic Entrepreneurship</h4>
+                    <p className="text-blue-600 font-medium">Jönköping International Business School, Sweden | 2023-2025</p>
+                    <div className="mt-3 space-y-2">
+                      <div className="bg-yellow-50 p-3 rounded-lg">
+                        <p className="text-sm font-medium text-yellow-800">🏆 Graduated with Honor. Received prestigious scholarship from Jönköping Chamber of Commerce</p>
+                      </div>
+                      <p className="text-gray-700">Focus on strategic business development, innovation, and digital transformation</p>
+                      <p className="text-sm text-gray-600"><strong>Relevant Coursework:</strong> Consumer behavior, Advanced leadership, Corporate entrepreneurship</p>
+                    </div>
+                  </div>
+                  <div className="border-l-4 border-gray-300 pl-6">
+                    <h4 className="text-xl font-semibold text-gray-900">Bachelor's in International Business</h4>
+                    <p className="text-gray-600 font-medium">Foreign Trade University, Vietnam | 2014-2018</p>
+                    <p className="text-gray-700 mt-2">Strong foundation in global business operations and cross-cultural management</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Experience */}
+            {activeSection === 'experience' && (
+              <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                  <Briefcase className="w-6 h-6 mr-3 text-blue-600" />
+                  Professional Experience
+                </h3>
+                <div className="space-y-6">
+                  {experiences.map((exp, index) => (
+                    <div key={exp.id} className="border-l-4 border-blue-500 pl-6">
+                      <div 
+                        className="cursor-pointer hover:bg-gray-50 p-4 rounded-lg transition-colors"
+                        onClick={() => toggleExperience(exp.id)}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="text-xl font-semibold text-gray-900">{exp.title}</h4>
+                            <p className="text-blue-600 font-medium">{exp.company}</p>
+                            <p className="text-gray-600 text-sm">{exp.period} | {exp.location}</p>
+                          </div>
+                          {expandedExperience[exp.id] ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+                        </div>
+                        
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {exp.highlights.map((highlight, idx) => (
+                            <span key={idx} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                              {highlight}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      {expandedExperience[exp.id] && (
+                        <div className="mt-4 pl-4 border-l-2 border-gray-200">
+                          <ul className="space-y-3">
+                            {exp.details.map((detail, idx) => (
+                              <li key={idx} className="text-gray-700 leading-relaxed">
+                                • {detail}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Skills */}
+            {activeSection === 'skills' && (
+              <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                  <Code className="w-6 h-6 mr-3 text-blue-600" />
+                  Technical Skills & Tools
+                </h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                  {Object.entries(skills).map(([category, items]) => (
+                    <div key={category} className="bg-gray-50 p-6 rounded-lg">
+                      <h4 className="font-semibold text-gray-900 mb-3">{category}</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {items.map((skill, idx) => (
+                          <span key={idx} className="bg-white px-3 py-1 rounded-full text-sm text-gray-700 shadow-sm">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Achievements */}
+            {activeSection === 'achievements' && (
+              <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                  <Award className="w-6 h-6 mr-3 text-blue-600" />
+                  Key Achievements
+                </h3>
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg">
+                    <div className="text-3xl font-bold text-green-600 mb-2">6 Months</div>
+                    <p className="text-gray-700 font-medium">Time-to-profitability for new product line through strategic initiatives</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg">
+                    <div className="text-3xl font-bold text-blue-600 mb-2">35%</div>
+                    <p className="text-gray-700 font-medium">User engagement increase through data-driven strategic analysis</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg">
+                    <div className="text-3xl font-bold text-orange-600 mb-2">180+</div>
+                    <p className="text-gray-700 font-medium">Participants trained with self-developed tool based on action research and rigorous methodology</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg">
+                    <div className="text-3xl font-bold text-purple-600 mb-2">C-Suite</div>
+                    <p className="text-gray-700 font-medium">Regular presentations to executive and Board level audiences with actionable recommendations</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default InteractiveCV;

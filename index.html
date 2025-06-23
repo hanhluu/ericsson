@@ -1,321 +1,804 @@
-import React, { useState } from 'react';
-import { Mail, Phone, MapPin, ChevronDown, ChevronRight, Award, Briefcase, GraduationCap, Code, Target } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hanh Luu - Strategy Analyst</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-const InteractiveCV = () => {
-  const [activeSection, setActiveSection] = useState('summary');
-  const [expandedExperience, setExpandedExperience] = useState({});
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #334155;
+        }
 
-  const toggleExperience = (id) => {
-    setExpandedExperience(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
-  };
+        .header {
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-bottom: 4px solid #2563eb;
+            padding: 2rem 0;
+        }
 
-  const experiences = [
-    {
-      id: 'buddyos',
-      title: 'Consultant',
-      company: 'BuddyOS STEM',
-      period: '2024-2025',
-      location: 'AI STEM toys - Vietnam & Remote',
-      highlights: ['Market Research & Customer Discovery', 'Strategic Business Development', 'Cross-functional Project Execution'],
-      details: [
-        'Built comprehensive user personas from scratch and conducted validation tests with early adopters to ensure product-market fit, directly informing strategic product decisions',
-        'Advised founders on transforming market insights and customer feedback into prioritized strategic initiatives, enabling clear executive decision-making',
-        'Led daily collaboration with engineering teams while managing strategic alignment across educators and business stakeholders'
-      ]
-    },
-    {
-      id: 'gumac',
-      title: 'Strategic Project Manager & CEO Assistant',
-      company: 'GUMAC',
-      period: '2022-2023',
-      location: 'Vietnam\'s Leading Fashion Brand - 40+ retail locations',
-      highlights: ['Strategic Initiative Leadership', 'Digital Transformation Strategy', 'Executive Presentations & Analysis'],
-      details: [
-        'Advised C-suite on complete product lifecycle for G-morning sub-brand from concept to profitability within 6 months through coordinated strategic planning across design, marketing, and operations',
-        'Led cross-functional digital transformation initiative for internal processes, developing structured implementation plans and training 30+ stakeholders',
-        'Presented customer insights, competitive analysis, and performance metrics to C-suite and Board of Directors, translating market data into strategic recommendations that drove company-wide initiatives'
-      ]
-    },
-    {
-      id: 'olli',
-      title: 'Growth Associate & Product Owner',
-      company: 'OLLI AI Technology',
-      period: '2021-2022',
-      location: 'Smart Speakers - Vietnam & Remote',
-      highlights: ['Data-Driven Strategy Development', 'Strategic Analysis & Testing', 'Cross-functional Strategy Execution'],
-      details: [
-        'Built internal BI system tracking user engagement, retention, and behavior patterns to guide strategic product decisions and market positioning',
-        'Drove hypothesis-based strategic improvements through structured testing methodologies, achieving 35% increase in user engagement by translating competitive insights into actionable features',
-        'Owned music recommendation feature strategy, collaborating with data engineers and scientists to optimize performance'
-      ]
-    },
-    {
-      id: 'mmtc',
-      title: 'Researcher Intern',
-      company: 'Media, Management and Transformation Center (MMTC)',
-      period: '2025',
-      location: 'Jönköping International Business School',
-      highlights: ['Strategic Market Analysis', 'Workshop Facilitation & Strategy Implementation', 'Innovation Strategy Development'],
-      details: [
-        'Systematically analyzed multi-year industry data and conducted 10+ in-depth stakeholder interviews to identify strategic improvement opportunities',
-        'Conducted four strategic workshops introducing innovation frameworks to 180+ participants through structured usability testing and action research methodologies',
-        'Designed cognitive decision-making framework improving strategic outcomes for 30 entrepreneurial teams using human-centered design principles'
-      ]
-    },
-    {
-      id: 'libe',
-      title: 'Assistant to Creative Director',
-      company: 'LIBÉ',
-      period: '2019-2020',
-      location: 'Leading Contemporary Fashion House, Vietnam',
-      highlights: ['Digital Transformation Strategy', 'Market Research & Customer Insights', 'Strategic Partnership Development'],
-      details: [
-        'Initiated and contributed to successful DTC platform launch, conducting competitive analysis and market research to inform strategic positioning',
-        'Conducted comprehensive market surveys and customer interviews, generating actionable insights for product development and strategic customer experience improvements',
-        'Collaborated with international partners including Swedish artist Sofia Holt to develop strategic brand positioning, resulting in measurable brand image enhancement'
-      ]
-    }
-  ];
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-  const skills = {
-    'Strategic Analysis': ['Excel (Advanced)', 'PowerPoint (Executive Presentations)', 'Data Modeling'],
-    'Market Research & Analytics': ['SQL', 'Google Analytics', 'Custom BI Systems', 'Competitive Intelligence'],
-    'Project Management': ['Miro', 'Notion', 'Jira', 'Confluence', 'Agile/Scrum Methodologies'],
-    'Cross-functional Collaboration': ['Technical specification writing', 'Engineering team communication', 'Stakeholder management']
-  };
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
 
-  const navItems = [
-    { id: 'summary', label: 'Summary', icon: Target },
-    { id: 'education', label: 'Education', icon: GraduationCap },
-    { id: 'experience', label: 'Experience', icon: Briefcase },
-    { id: 'skills', label: 'Skills', icon: Code },
-    { id: 'achievements', label: 'Achievements', icon: Award }
-  ];
+        .header h2 {
+            font-size: 1.5rem;
+            color: #2563eb;
+            font-weight: 600;
+        }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      {/* Header */}
-      <div className="bg-white shadow-lg border-b-4 border-blue-600">
-        <div className="max-w-6xl mx-auto px-6 py-8">
-          <div className="flex items-center justify-between">
+        .contact-info {
+            text-align: right;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 0.5rem;
+            color: #64748b;
+        }
+
+        .contact-item svg {
+            width: 16px;
+            height: 16px;
+            margin-left: 8px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background: #f1f5f9;
+        }
+
+        .nav-item.active {
+            background: #dbeafe;
+            color: #1d4ed8;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        .section {
+            display: none;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title svg {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            color: #2563eb;
+        }
+
+        .summary-text {
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            color: #475569;
+        }
+
+        .strengths-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .strength-card {
+            padding: 1rem;
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+
+        .strength-card.blue {
+            background: #dbeafe;
+        }
+
+        .strength-card.green {
+            background: #dcfce7;
+        }
+
+        .strength-card h4 {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .strength-list {
+            list-style: none;
+            font-size: 0.875rem;
+            color: #475569;
+        }
+
+        .strength-list li {
+            margin-bottom: 0.25rem;
+        }
+
+        .education-item {
+            border-left: 4px solid #2563eb;
+            padding-left: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .education-item.secondary {
+            border-left-color: #94a3b8;
+        }
+
+        .education-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .education-school {
+            color: #2563eb;
+            font-weight: 500;
+            margin: 0.25rem 0;
+        }
+
+        .honor-badge {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin: 0.75rem 0;
+            display: inline-block;
+        }
+
+        .experience-item {
+            border-left: 4px solid #2563eb;
+            padding-left: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .experience-header {
+            cursor: pointer;
+            padding: 1rem;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .experience-header:hover {
+            background: #f8fafc;
+        }
+
+        .experience-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .experience-company {
+            color: #2563eb;
+            font-weight: 500;
+        }
+
+        .experience-meta {
+            color: #64748b;
+            font-size: 0.875rem;
+            margin: 0.25rem 0 0.75rem 0;
+        }
+
+        .highlight-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .highlight-tag {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .experience-details {
+            display: none;
+            margin-top: 1rem;
+            padding-left: 1rem;
+            border-left: 2px solid #e2e8f0;
+        }
+
+        .experience-details.visible {
+            display: block;
+        }
+
+        .experience-details ul {
+            list-style: none;
+        }
+
+        .experience-details li {
+            margin-bottom: 0.75rem;
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .experience-details li::before {
+            content: "•";
+            color: #2563eb;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-category {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .skill-category h4 {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            color: #475569;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .achievement-card {
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .achievement-card.green {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+
+        .achievement-card.blue {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        }
+
+        .achievement-card.orange {
+            background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
+        }
+
+        .achievement-card.purple {
+            background: linear-gradient(135deg, #faf5ff 0%, #e9d5ff 100%);
+        }
+
+        .achievement-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .achievement-card.green .achievement-number {
+            color: #059669;
+        }
+
+        .achievement-card.blue .achievement-number {
+            color: #2563eb;
+        }
+
+        .achievement-card.orange .achievement-number {
+            color: #ea580c;
+        }
+
+        .achievement-card.purple .achievement-number {
+            color: #9333ea;
+        }
+
+        .achievement-description {
+            color: #475569;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .chevron {
+            float: right;
+            transition: transform 0.2s;
+        }
+
+        .chevron.rotated {
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: static;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-info {
+                text-align: center;
+                margin-top: 1rem;
+            }
+
+            .contact-item {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
             <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">HANH LUU</h1>
-              <h2 className="text-2xl text-blue-600 font-semibold">Strategy Analyst</h2>
+                <h1>HANH LUU</h1>
+                <h2>Strategy Analyst</h2>
             </div>
-            <div className="text-right space-y-2">
-              <div className="flex items-center justify-end space-x-2 text-gray-600">
-                <Mail className="w-4 h-4" />
-                <span>luuthuyhanh@gmail.com</span>
-              </div>
-              <div className="flex items-center justify-end space-x-2 text-gray-600">
-                <Phone className="w-4 h-4" />
-                <span>+46 76 154 6740</span>
-              </div>
-              <div className="flex items-center justify-end space-x-2 text-gray-600">
-                <MapPin className="w-4 h-4" />
-                <span>Stockholm, Sweden</span>
-              </div>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>luuthuyhanh@gmail.com</span>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <div class="contact-item">
+                    <span>+46 76 154 6740</span>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                    </svg>
+                </div>
+                <div class="contact-item">
+                    <span>Stockholm, Sweden</span>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-6 py-8">
-        <div className="flex gap-8">
-          {/* Navigation Sidebar */}
-          <div className="w-64 bg-white rounded-lg shadow-lg p-6 h-fit sticky top-8">
-            <nav className="space-y-2">
-              {navItems.map(item => {
-                const Icon = item.icon;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveSection(item.id)}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-                      activeSection === item.id 
-                        ? 'bg-blue-100 text-blue-700 shadow-md' 
-                        : 'text-gray-600 hover:bg-gray-50'
-                    }`}
-                  >
-                    <Icon className="w-5 h-5" />
-                    <span className="font-medium">{item.label}</span>
-                  </button>
-                );
-              })}
-            </nav>
-          </div>
-
-          {/* Main Content */}
-          <div className="flex-1">
-            {/* Professional Summary */}
-            {activeSection === 'summary' && (
-              <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                  <Target className="w-6 h-6 mr-3 text-blue-600" />
-                  Professional Summary
-                </h3>
-                <p className="text-gray-700 leading-relaxed mb-6">
-                  Strategy-focused professional with 5+ years driving strategic initiatives, market research, and cross-functional project execution across startups and established enterprises. Proven expertise in data-driven analysis, competitive intelligence, and executive presentations. Strong background in digital transformation, customer discovery, and workshop facilitation.
-                </p>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-gray-900 mb-2">Core Strengths:</h4>
-                    <ul className="space-y-1 text-sm text-gray-700">
-                      <li>• Strategic analysis and market research with quantified business impact</li>
-                      <li>• Executive communication and stakeholder management across C-suite audiences</li>
-                      <li>• Cross-functional leadership spanning technical teams to business stakeholders</li>
-                      <li>• Data modeling and structured problem-solving methodologies</li>
-                    </ul>
-                  </div>
-                  <div className="bg-green-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-gray-900 mb-2">Key Metrics:</h4>
-                    <ul className="space-y-1 text-sm text-gray-700">
-                      <li>• 5+ years strategic experience</li>
-                      <li>• 35% user engagement increase achieved</li>
-                      <li>• 180+ workshop participants trained</li>
-                      <li>• 40+ retail locations transformed</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Education */}
-            {activeSection === 'education' && (
-              <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                  <GraduationCap className="w-6 h-6 mr-3 text-blue-600" />
-                  Education
-                </h3>
-                <div className="space-y-6">
-                  <div className="border-l-4 border-blue-500 pl-6">
-                    <h4 className="text-xl font-semibold text-gray-900">Master's in Strategic Entrepreneurship</h4>
-                    <p className="text-blue-600 font-medium">Jönköping International Business School, Sweden | 2023-2025</p>
-                    <div className="mt-3 space-y-2">
-                      <div className="bg-yellow-50 p-3 rounded-lg">
-                        <p className="text-sm font-medium text-yellow-800">🏆 Graduated with Honor. Received prestigious scholarship from Jönköping Chamber of Commerce</p>
-                      </div>
-                      <p className="text-gray-700">Focus on strategic business development, innovation, and digital transformation</p>
-                      <p className="text-sm text-gray-600"><strong>Relevant Coursework:</strong> Consumer behavior, Advanced leadership, Corporate entrepreneurship</p>
-                    </div>
-                  </div>
-                  <div className="border-l-4 border-gray-300 pl-6">
-                    <h4 className="text-xl font-semibold text-gray-900">Bachelor's in International Business</h4>
-                    <p className="text-gray-600 font-medium">Foreign Trade University, Vietnam | 2014-2018</p>
-                    <p className="text-gray-700 mt-2">Strong foundation in global business operations and cross-cultural management</p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Experience */}
-            {activeSection === 'experience' && (
-              <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                  <Briefcase className="w-6 h-6 mr-3 text-blue-600" />
-                  Professional Experience
-                </h3>
-                <div className="space-y-6">
-                  {experiences.map((exp, index) => (
-                    <div key={exp.id} className="border-l-4 border-blue-500 pl-6">
-                      <div 
-                        className="cursor-pointer hover:bg-gray-50 p-4 rounded-lg transition-colors"
-                        onClick={() => toggleExperience(exp.id)}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <h4 className="text-xl font-semibold text-gray-900">{exp.title}</h4>
-                            <p className="text-blue-600 font-medium">{exp.company}</p>
-                            <p className="text-gray-600 text-sm">{exp.period} | {exp.location}</p>
-                          </div>
-                          {expandedExperience[exp.id] ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
-                        </div>
-                        
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          {exp.highlights.map((highlight, idx) => (
-                            <span key={idx} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-                              {highlight}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      {expandedExperience[exp.id] && (
-                        <div className="mt-4 pl-4 border-l-2 border-gray-200">
-                          <ul className="space-y-3">
-                            {exp.details.map((detail, idx) => (
-                              <li key={idx} className="text-gray-700 leading-relaxed">
-                                • {detail}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Skills */}
-            {activeSection === 'skills' && (
-              <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                  <Code className="w-6 h-6 mr-3 text-blue-600" />
-                  Technical Skills & Tools
-                </h3>
-                <div className="grid md:grid-cols-2 gap-6">
-                  {Object.entries(skills).map(([category, items]) => (
-                    <div key={category} className="bg-gray-50 p-6 rounded-lg">
-                      <h4 className="font-semibold text-gray-900 mb-3">{category}</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {items.map((skill, idx) => (
-                          <span key={idx} className="bg-white px-3 py-1 rounded-full text-sm text-gray-700 shadow-sm">
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Achievements */}
-            {activeSection === 'achievements' && (
-              <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                  <Award className="w-6 h-6 mr-3 text-blue-600" />
-                  Key Achievements
-                </h3>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-lg">
-                    <div className="text-3xl font-bold text-green-600 mb-2">6 Months</div>
-                    <p className="text-gray-700 font-medium">Time-to-profitability for new product line through strategic initiatives</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg">
-                    <div className="text-3xl font-bold text-blue-600 mb-2">35%</div>
-                    <p className="text-gray-700 font-medium">User engagement increase through data-driven strategic analysis</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-lg">
-                    <div className="text-3xl font-bold text-orange-600 mb-2">180+</div>
-                    <p className="text-gray-700 font-medium">Participants trained with self-developed tool based on action research and rigorous methodology</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg">
-                    <div className="text-3xl font-bold text-purple-600 mb-2">C-Suite</div>
-                    <p className="text-gray-700 font-medium">Regular presentations to executive and Board level audiences with actionable recommendations</p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
     </div>
-  );
-};
 
-export default InteractiveCV;
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <nav>
+                <div class="nav-item active" data-section="summary">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Summary</span>
+                </div>
+                <div class="nav-item" data-section="education">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                    </svg>
+                    <span>Education</span>
+                </div>
+                <div class="nav-item" data-section="experience">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 00-2 2H10a2 2 0 00-2-2V6m0 0v12a2 2 0 002 2h8a2 2 0 002-2V6z"></path>
+                    </svg>
+                    <span>Experience</span>
+                </div>
+                <div class="nav-item" data-section="skills">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                    </svg>
+                    <span>Skills</span>
+                </div>
+                <div class="nav-item" data-section="achievements">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                    </svg>
+                    <span>Achievements</span>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Professional Summary -->
+            <div class="section active" id="summary">
+                <h3 class="section-title">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Professional Summary
+                </h3>
+                <p class="summary-text">
+                    Strategy-focused professional with 5+ years driving strategic initiatives, market research, and cross-functional project execution across startups and established enterprises. Proven expertise in data-driven analysis, competitive intelligence, and executive presentations. Strong background in digital transformation, customer discovery, and workshop facilitation.
+                </p>
+                <div class="strengths-grid">
+                    <div class="strength-card blue">
+                        <h4>Core Strengths:</h4>
+                        <ul class="strength-list">
+                            <li>• Strategic analysis and market research with quantified business impact</li>
+                            <li>• Executive communication and stakeholder management across C-suite audiences</li>
+                            <li>• Cross-functional leadership spanning technical teams to business stakeholders</li>
+                            <li>• Data modeling and structured problem-solving methodologies</li>
+                        </ul>
+                    </div>
+                    <div class="strength-card green">
+                        <h4>Key Metrics:</h4>
+                        <ul class="strength-list">
+                            <li>• 5+ years strategic experience</li>
+                            <li>• 35% user engagement increase achieved</li>
+                            <li>• 180+ workshop participants trained</li>
+                            <li>• 40+ retail locations transformed</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="section" id="education">
+                <h3 class="section-title">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path>
+                    </svg>
+                    Education
+                </h3>
+                <div class="education-item">
+                    <h4 class="education-title">Master's in Strategic Entrepreneurship</h4>
+                    <p class="education-school">Jönköping International Business School, Sweden | 2023-2025</p>
+                    <div class="honor-badge">🏆 Graduated with Honor. Received prestigious scholarship from Jönköping Chamber of Commerce</div>
+                    <p style="margin: 0.75rem 0; color: #475569;">Focus on strategic business development, innovation, and digital transformation</p>
+                    <p style="font-size: 0.875rem; color: #64748b;"><strong>Relevant Coursework:</strong> Consumer behavior, Advanced leadership, Corporate entrepreneurship</p>
+                </div>
+                <div class="education-item secondary">
+                    <h4 class="education-title">Bachelor's in International Business</h4>
+                    <p class="education-school" style="color: #64748b;">Foreign Trade University, Vietnam | 2014-2018</p>
+                    <p style="color: #475569; margin-top: 0.5rem;">Strong foundation in global business operations and cross-cultural management</p>
+                </div>
+            </div>
+
+            <!-- Experience -->
+            <div class="section" id="experience">
+                <h3 class="section-title">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 00-2 2H10a2 2 0 00-2-2V6m0 0v12a2 2 0 002 2h8a2 2 0 002-2V6z"></path>
+                    </svg>
+                    Professional Experience
+                </h3>
+                
+                <div class="experience-item">
+                    <div class="experience-header" onclick="toggleExperience('buddyos')">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h4 class="experience-title">Consultant</h4>
+                                <p class="experience-company">BuddyOS STEM</p>
+                                <p class="experience-meta">2024-2025 | AI STEM toys - Vietnam & Remote</p>
+                            </div>
+                            <span class="chevron" id="chevron-buddyos">▶</span>
+                        </div>
+                        <div class="highlight-tags">
+                            <span class="highlight-tag">Market Research & Customer Discovery</span>
+                            <span class="highlight-tag">Strategic Business Development</span>
+                            <span class="highlight-tag">Cross-functional Project Execution</span>
+                        </div>
+                    </div>
+                    <div class="experience-details" id="details-buddyos">
+                        <ul>
+                            <li>Built comprehensive user personas from scratch and conducted validation tests with early adopters to ensure product-market fit, directly informing strategic product decisions</li>
+                            <li>Advised founders on transforming market insights and customer feedback into prioritized strategic initiatives, enabling clear executive decision-making</li>
+                            <li>Led daily collaboration with engineering teams while managing strategic alignment across educators and business stakeholders</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header" onclick="toggleExperience('gumac')">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h4 class="experience-title">Strategic Project Manager & CEO Assistant</h4>
+                                <p class="experience-company">GUMAC</p>
+                                <p class="experience-meta">2022-2023 | Vietnam's Leading Fashion Brand - 40+ retail locations</p>
+                            </div>
+                            <span class="chevron" id="chevron-gumac">▶</span>
+                        </div>
+                        <div class="highlight-tags">
+                            <span class="highlight-tag">Strategic Initiative Leadership</span>
+                            <span class="highlight-tag">Digital Transformation Strategy</span>
+                            <span class="highlight-tag">Executive Presentations & Analysis</span>
+                        </div>
+                    </div>
+                    <div class="experience-details" id="details-gumac">
+                        <ul>
+                            <li>Advised C-suite on complete product lifecycle for G-morning sub-brand from concept to profitability within 6 months through coordinated strategic planning across design, marketing, and operations</li>
+                            <li>Led cross-functional digital transformation initiative for internal processes, developing structured implementation plans and training 30+ stakeholders</li>
+                            <li>Presented customer insights, competitive analysis, and performance metrics to C-suite and Board of Directors, translating market data into strategic recommendations that drove company-wide initiatives</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header" onclick="toggleExperience('olli')">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h4 class="experience-title">Growth Associate & Product Owner</h4>
+                                <p class="experience-company">OLLI AI Technology</p>
+                                <p class="experience-meta">2021-2022 | Smart Speakers - Vietnam & Remote</p>
+                            </div>
+                            <span class="chevron" id="chevron-olli">▶</span>
+                        </div>
+                        <div class="highlight-tags">
+                            <span class="highlight-tag">Data-Driven Strategy Development</span>
+                            <span class="highlight-tag">Strategic Analysis & Testing</span>
+                            <span class="highlight-tag">Cross-functional Strategy Execution</span>
+                        </div>
+                    </div>
+                    <div class="experience-details" id="details-olli">
+                        <ul>
+                            <li>Built internal BI system tracking user engagement, retention, and behavior patterns to guide strategic product decisions and market positioning</li>
+                            <li>Drove hypothesis-based strategic improvements through structured testing methodologies, achieving 35% increase in user engagement by translating competitive insights into actionable features</li>
+                            <li>Owned music recommendation feature strategy, collaborating with data engineers and scientists to optimize performance</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header" onclick="toggleExperience('mmtc')">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h4 class="experience-title">Researcher Intern</h4>
+                                <p class="experience-company">Media, Management and Transformation Center (MMTC)</p>
+                                <p class="experience-meta">2025 | Jönköping International Business School</p>
+                            </div>
+                            <span class="chevron" id="chevron-mmtc">▶</span>
+                        </div>
+                        <div class="highlight-tags">
+                            <span class="highlight-tag">Strategic Market Analysis</span>
+                            <span class="highlight-tag">Workshop Facilitation & Strategy Implementation</span>
+                            <span class="highlight-tag">Innovation Strategy Development</span>
+                        </div>
+                    </div>
+                    <div class="experience-details" id="details-mmtc">
+                        <ul>
+                            <li>Systematically analyzed multi-year industry data and conducted 10+ in-depth stakeholder interviews to identify strategic improvement opportunities</li>
+                            <li>Conducted four strategic workshops introducing innovation frameworks to 180+ participants through structured usability testing and action research methodologies</li>
+                            <li>Designed cognitive decision-making framework improving strategic outcomes for 30 entrepreneurial teams using human-centered design principles</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header" onclick="toggleExperience('libe')">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h4 class="experience-title">Assistant to Creative Director</h4>
+                                <p class="experience-company">LIBÉ</p>
+                                <p class="experience-meta">2019-2020 | Leading Contemporary Fashion House, Vietnam</p>
+                            </div>
+                            <span class="chevron" id="chevron-libe">▶</span>
+                        </div>
+                        <div class="highlight-tags">
+                            <span class="highlight-tag">Digital Transformation Strategy</span>
+                            <span class="highlight-tag">Market Research & Customer Insights</span>
+                            <span class="highlight-tag">Strategic Partnership Development</span>
+                        </div>
+                    </div>
+                    <div class="experience-details" id="details-libe">
+                        <ul>
+                            <li>Initiated and contributed to successful DTC platform launch, conducting competitive analysis and market research to inform strategic positioning</li>
+                            <li>Conducted comprehensive market surveys and customer interviews, generating actionable insights for product development and strategic customer experience improvements</li>
+                            <li>Collaborated with international partners including Swedish artist Sofia Holt to develop strategic brand positioning, resulting in measurable brand image enhancement</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="section" id="skills">
+                <h3 class="section-title">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                    </svg>
+                    Technical Skills & Tools
+                </h3>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4>Strategic Analysis</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Excel (Advanced)</span>
+                            <span class="skill-tag">PowerPoint (Executive Presentations)</span>
+                            <span class="skill-tag">Data Modeling</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Market Research & Analytics</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">Google Analytics</span>
+                            <span class="skill-tag">Custom BI Systems</span>
+                            <span class="skill-tag">Competitive Intelligence</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Project Management</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Miro</span>
+                            <span class="skill-tag">Notion</span>
+                            <span class="skill-tag">Jira</span>
+                            <span class="skill-tag">Confluence</span>
+                            <span class="skill-tag">Agile/Scrum Methodologies</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h4>Cross-functional Collaboration</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Technical specification writing</span>
+                            <span class="skill-tag">Engineering team communication</span>
+                            <span class="skill-tag">Stakeholder management</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements -->
+            <div class="section" id="achievements">
+                <h3 class="section-title">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                    </svg>
+                    Key Achievements
+                </h3>
+                <div class="achievements-grid">
+                    <div class="achievement-card green">
+                        <div class="achievement-number">6 Months</div>
+                        <p class="achievement-description">Time-to-profitability for new product line through strategic initiatives</p>
+                    </div>
+                    <div class="achievement-card blue">
+                        <div class="achievement-number">35%</div>
+                        <p class="achievement-description">User engagement increase through data-driven strategic analysis</p>
+                    </div>
+                    <div class="achievement-card orange">
+                        <div class="achievement-number">180+</div>
+                        <p class="achievement-description">Participants trained with self-developed tool based on action research and rigorous methodology</p>
+                    </div>
+                    <div class="achievement-card purple">
+                        <div class="achievement-number">C-Suite</div>
+                        <p class="achievement-description">Regular presentations to executive and Board level audiences with actionable recommendations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation functionality
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active class from all nav items and sections
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+                
+                // Add active class to clicked nav item
+                item.classList.add('active');
+                
+                // Show corresponding section
+                const sectionId = item.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+
+        // Experience toggle functionality
+        function toggleExperience(id) {
+            const details = document.getElementById(`details-${id}`);
+            const chevron = document.getElementById(`chevron-${id}`);
+            
+            if (details.classList.contains('visible')) {
+                details.classList.remove('visible');
+                chevron.textContent = '▶';
+                chevron.classList.remove('rotated');
+            } else {
+                details.classList.add('visible');
+                chevron.textContent = '▼';
+                chevron.classList.add('rotated');
+            }
+        }
+
+        // Auto-expand first experience item on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            toggleExperience('buddyos');
+        });
+    </script>
+</body>
+</html>
